@@ -3,6 +3,10 @@ services:
     image: postgres:15-alpine
     container_name: ghost_postgres
     restart: unless-stopped
+    networks:
+      ghost_net:
+        aliases:
+          - postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-ghost}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ghost_secret}
@@ -21,8 +25,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      network: host
     container_name: ghost_backend
     restart: unless-stopped
+    networks:
+      - ghost_net
     depends_on:
       postgres:
         condition: service_healthy
@@ -30,6 +37,7 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-ghost}:${POSTGRES_PASSWORD:-ghost_secret}@postgres:5432/${POSTGRES_DB:-ghost_networks}
       APIFY_API_TOKEN: ${APIFY_API_TOKEN:-}
       AUTO_SEED: ${AUTO_SEED:-true}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173}
     ports:
       - "8000:8000"
     volumes:
@@ -39,18 +47,6 @@ services:
       sh -c "python app/scripts/seed.py &&
              uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
-  dashboard:
-    build:
-      context: ./dashboard
-      dockerfile: Dockerfile
-    container_name: ghost_dashboard
-    restart: unless-stopped
-    depends_on:
-      - backend
-    environment:
-      BACKEND_API_URL: ${BACKEND_API_URL:-http://backend:8000/api}
-    ports:
-      - "8501:8501"
-    volumes:
-      - ./dashboard:/app
-    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
+networks:
+  ghost_net:
+    driver: bridge

@@ -54,9 +54,16 @@ def bulk_ingest_listings(payload: BulkIngestRequest, db: Session = Depends(get_d
         auto_extracted = extract_contacts_from_text(item.description, item.country_code)
         all_contacts.extend(auto_extracted)
 
+        # Track contacts already associated with this listing
+        existing_contact_ids = {c.id for c in listing.contacts}
+        seen_norm_values_for_listing = set()
+
         for c_entry in all_contacts:
-            raw_val = c_entry["raw_value"]
-            c_type = c_entry["contact_type"]
+            raw_val = c_entry.get("raw_value")
+            c_type = c_entry.get("contact_type")
+            if not raw_val or not c_type:
+                continue
+
             norm_val = None
             inferred_country = item.country_code.upper()
 
@@ -70,32 +77,40 @@ def bulk_ingest_listings(payload: BulkIngestRequest, db: Session = Depends(get_d
             if not norm_val:
                 continue
 
+            # Deduplicate per listing
+            if norm_val in seen_norm_values_for_listing:
+                continue
+            seen_norm_values_for_listing.add(norm_val)
+
             if norm_val in contact_cache:
                 contact_obj = contact_cache[norm_val]
-                contact_obj.listings_count += 1
             else:
                 contact_obj = db.query(Contact).filter(Contact.normalized_value == norm_val).first()
-                if contact_obj:
-                    contact_obj.listings_count += 1
-                else:
+                if not contact_obj:
                     contact_obj = Contact(
                         id=uuid.uuid4(),
                         contact_type=c_type,
                         normalized_value=norm_val,
                         raw_sample=raw_val,
                         country_code=inferred_country,
-                        listings_count=1
+                        listings_count=0
                     )
                     db.add(contact_obj)
                     db.flush()
                 contact_cache[norm_val] = contact_obj
 
-            # Junction
-            j = db.query(ListingContact).filter_by(listing_id=listing.id, contact_id=contact_obj.id).first()
-            if not j:
-                db.add(ListingContact(listing_id=listing.id, contact_id=contact_obj.id))
+            # Associate junction safely and idempotently
+            has_association = (
+                contact_obj.id in existing_contact_ids
+                or contact_obj in listing.contacts
+                or db.query(ListingContact).filter_by(listing_id=listing.id, contact_id=contact_obj.id).first() is not None
+            )
+            if not has_association:
+                listing.contacts.append(contact_obj)
+                existing_contact_ids.add(contact_obj.id)
+                contact_obj.listings_count += 1
 
-    db.commit()
+        db.commit()
 
     if inserted_ids:
         # Run detection and scoring pipeline
