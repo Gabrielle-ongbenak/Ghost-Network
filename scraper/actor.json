@@ -1,9 +1,0 @@
-{
-  "actorSpecification": 1,
-  "name": "ghost-networks-scraper",
-  "title": "Ghost Networks Multi-Country Job Scraper",
-  "description": "Scrapes African job boards (Nigeria, Cameroon, Kenya) and extracts contact details and job offers for scam syndicate analysis.",
-  "version": "1.0",
-  "dockerfile": "./Dockerfile",
-  "input": "./input_schema.json"
-}

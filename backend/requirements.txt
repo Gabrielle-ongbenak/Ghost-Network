@@ -9,3 +9,4 @@ networkx==3.2.1
 phonenumbers==8.13.32
 requests==2.31.0
 python-multipart==0.0.9
+apify-client==1.6.0

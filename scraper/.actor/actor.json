@@ -1,0 +1,31 @@
+{
+  "actorSpecification": 1,
+  "name": "pan-african-job-scam-detector",
+  "title": "Pan-African Job Scam & Threat Network Detector",
+  "description": "Scrapes and audits African job postings (Cameroon, Nigeria, Kenya), extracts WhatsApp lines & emails, detects illegal recruitment fees, and unmasks cross-border fraud syndicates using NetworkX.",
+  "version": "1.0",
+  "meta": {
+    "templateId": "python-empty"
+  },
+  "dockerfile": "../Dockerfile",
+  "input": "./input_schema.json",
+  "readme": "../README.md",
+  "categories": [
+    "CYBERSECURITY",
+    "JOBS",
+    "AI"
+  ],
+  "pricing": {
+    "model": "FREE",
+    "events": {
+      "LISTING_SCANNED": {
+        "eventTitle": "Job Listing Scanned & Contacts Extracted",
+        "priceUsd": 0.005
+      },
+      "SYNDICATE_UNMASKED": {
+        "eventTitle": "Cross-Border Fraud Syndicate Unmasked",
+        "priceUsd": 0.05
+      }
+    }
+  }
+}

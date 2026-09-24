@@ -30,6 +30,23 @@ class BulkIngestResponse(BaseModel):
     duplicate_count: int
     inserted_ids: List[uuid.UUID]
 
+class ApifyIngestRequest(BaseModel):
+    actor_id: str = Field(default="ghost-networks-scraper", description="Apify Actor ID or name")
+    run_input: Optional[dict] = Field(default=None, description="Input parameters for the Apify Actor")
+    token: Optional[str] = Field(default=None, description="Apify API Token (falls back to settings.APIFY_API_TOKEN)")
+    max_items: Optional[int] = Field(default=50, description="Max items to retrieve from dataset")
+    sample_items: Optional[List[dict]] = Field(default=None, description="Direct ad objects for offline simulation or testing")
+
+class ApifyIngestResponse(BaseModel):
+    status: str
+    actor_id: str
+    items_scraped: int
+    inserted_count: int
+    duplicate_count: int
+    inserted_ids: List[uuid.UUID]
+    syndicates_detected: int
+    cross_border_syndicates: int
+
 class ListingSummary(BaseModel):
     id: uuid.UUID
     source_id: str
