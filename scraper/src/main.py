@@ -74,10 +74,12 @@ async def main():
 
             listing_record = {
                 "record_type": "JOB_LISTING",
+                "listing_id": source_id,
                 "source_id": source_id,
                 "title": title,
                 "description": description,
                 "platform": platform,
+                "country": country_code,
                 "country_code": country_code,
                 "poster_name": poster_name,
                 "source_url": source_url,
@@ -85,6 +87,7 @@ async def main():
                 "risk_score": risk_analysis["risk_score"],
                 "risk_level": risk_analysis["risk_level"],
                 "risk_signals": risk_analysis["risk_signals"],
+                "is_fraud_suspect": "YES" if risk_analysis["risk_score"] >= 70 else "NO",
                 "syndicate_id": None,
                 "syndicate_label": None,
                 "analyzed_at": datetime.utcnow().isoformat()

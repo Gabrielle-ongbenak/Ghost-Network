@@ -106,6 +106,7 @@ def build_network_and_find_syndicates(listings: List[Dict[str, Any]]) -> Dict[st
                     if is_cross_border:
                         target_l["risk_score"] = 100
                         target_l["risk_level"] = "CRITICAL"
+                        target_l["is_fraud_suspect"] = "YES"
                         # Append cross-border signal if not already present
                         signals = target_l.setdefault("risk_signals", [])
                         if not any(s.get("code") == "CROSS_BORDER_SYNDICATE" for s in signals):
