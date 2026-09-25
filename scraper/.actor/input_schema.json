@@ -1,0 +1,61 @@
+{
+  "title": "Pan-African Job Scam & Threat Network Detector Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "target_countries": {
+      "title": "Target Countries",
+      "type": "array",
+      "description": "Select African countries to scan for fraudulent job advertisements and cross-border rings.",
+      "editor": "select",
+      "default": ["CMR", "NGA", "KEN"],
+      "items": {
+        "type": "string",
+        "enum": ["CMR", "NGA", "KEN", "GHA"],
+        "enumTitles": [
+          "Cameroon (CMR)",
+          "Nigeria (NGA)",
+          "Kenya (KEN)",
+          "Ghana (GHA)"
+        ]
+      }
+    },
+    "search_keywords": {
+      "title": "Search Terms & Keywords",
+      "type": "array",
+      "description": "Job titles, industries, or suspicious fee phrases to target.",
+      "editor": "stringList",
+      "default": [
+        "assistant",
+        "receptionist",
+        "secretary",
+        "cashier",
+        "customer care",
+        "frais de dossier",
+        "registration fee"
+      ]
+    },
+    "max_listings": {
+      "title": "Maximum Listings to Scan",
+      "type": "integer",
+      "description": "Maximum number of ads to retrieve, parse, and analyze in this run.",
+      "default": 30,
+      "minimum": 1,
+      "maximum": 500
+    },
+    "enable_network_analysis": {
+      "title": "Enable NetworkX Syndicate Graph Analysis",
+      "type": "boolean",
+      "description": "Correlates contacts (phones, WhatsApp lines, emails) across listings to unmask coordinated cross-border scam rings.",
+      "default": true
+    },
+    "custom_listings": {
+      "title": "Direct Job Postings (Offline / Custom Batch Audit)",
+      "type": "array",
+      "description": "Paste your own raw job postings for immediate forensic auditing and syndicate detection.",
+      "editor": "json",
+      "default": []
+    }
+  },
+  "required": ["target_countries", "max_listings"]
+}

@@ -1,10 +1,12 @@
-FROM python:3.11-slim
+# Official Apify Python 3.11 base image
+FROM apify/actor-python:3.11
 
-WORKDIR /usr/src/app
-
+# Copy requirements and install dependencies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Copy Actor project files
+COPY . ./
 
-CMD ["python", "src/main.py"]
+# Execute the Actor main module
+CMD ["python3", "-m", "src.main"]

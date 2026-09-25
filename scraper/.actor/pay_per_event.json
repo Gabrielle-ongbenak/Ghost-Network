@@ -1,0 +1,15 @@
+{
+  "events": {
+    "LISTING_SCANNED": {
+      "title": "Job Listing Scanned & Contacts Extracted",
+      "description": "Charged for each job posting retrieved, contact-parsed, and audited for scam signals.",
+      "priceUsd": 0.005
+    },
+    "SYNDICATE_UNMASKED": {
+      "title": "Cross-Border Fraud Syndicate Unmasked",
+      "description": "High-value threat intelligence event: charged whenever a cross-border criminal fraud syndicate is unmasked.",
+      "priceUsd": 0.05
+    }
+  },
+  "defaultEvent": "LISTING_SCANNED"
+}

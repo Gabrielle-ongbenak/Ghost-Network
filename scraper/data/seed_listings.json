@@ -1,0 +1,139 @@
+[
+  {
+    "source_id": "jiji_nga_101",
+    "title": "Administrative Assistant & Receptionist Urgently Needed",
+    "description": "Reputable multinational company hiring Administrative Assistants. Salary: 120,000 NGN. Key responsibilities include receiving visitors, managing office supplies, and document filing. Registration fee of 3,500 NGN required for training kit and verification. Contact HR via WhatsApp on 08031234567 or email globalcareersonline@gmail.com.",
+    "platform": "jiji",
+    "country_code": "NGA",
+    "poster_name": "Global Career Recruiters Ltd",
+    "source_url": "https://jiji.ng/lagos/jobs/administrative-assistant-101",
+    "posted_at": "2026-09-18T09:30:00Z",
+    "extracted_contacts": [
+      { "raw_value": "08031234567", "contact_type": "PHONE" },
+      { "raw_value": "globalcareersonline@gmail.com", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "fb_cmr_201",
+    "title": "Recrutement Urgent: Assistant Administratif (Douala)",
+    "description": "Grande entreprise multinationale recrute des assistants administratifs pour son bureau de Douala. Salaire attractif: 250,000 FCFA. Frais de dossier et frais de formation obligatoires de 15,000 FCFA pour l'obtention du kit de travail. Contact WhatsApp uniquement: +234 803 123 4567 ou 699112233. Envoyez CV à globalcareersonline@gmail.com.",
+    "platform": "facebook_group",
+    "country_code": "CMR",
+    "poster_name": "Cabinet Recrutement CEMAC",
+    "source_url": "https://facebook.com/groups/jobsdouala/posts/201",
+    "posted_at": "2026-09-19T11:15:00Z",
+    "extracted_contacts": [
+      { "raw_value": "+234 803 123 4567", "contact_type": "PHONE" },
+      { "raw_value": "699112233", "contact_type": "PHONE" },
+      { "raw_value": "globalcareersonline@gmail.com", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "jiji_nga_102",
+    "title": "Customer Care Representative / Front Desk Officer",
+    "description": "Leading commercial logistics hub urgently requires Customer Care Officers in Ikeja, Lagos. Monthly stipend 95,000 NGN. Candidates must attend orientation. Note: non-refundable application fee and badge fee of 4,000 NGN applies for security clearance. Send details on WhatsApp: 08031234567.",
+    "platform": "jiji",
+    "country_code": "NGA",
+    "poster_name": "Swift Logistics Express",
+    "source_url": "https://jiji.ng/lagos/jobs/customer-care-102",
+    "posted_at": "2026-09-19T14:20:00Z",
+    "extracted_contacts": [
+      { "raw_value": "08031234567", "contact_type": "PHONE" }
+    ]
+  },
+  {
+    "source_id": "cmr_class_202",
+    "title": "Agents de Service Client et Téléconseillers (Yaoundé)",
+    "description": "Nous recrutons des agents de service client dynamiques pour Yaoundé. Frais de dossier de 10,000 FCFA à régler pour l'entretien d'embauche et le badge d'accès. Envoyez un message WhatsApp au 6 99 11 22 33 ou contactez +2348031234567.",
+    "platform": "cameroon_classifieds",
+    "country_code": "CMR",
+    "poster_name": "Yaounde Call Centre Hub",
+    "source_url": "https://cameroon-classifieds.com/jobs/teleconseiller-202",
+    "posted_at": "2026-09-20T08:45:00Z",
+    "extracted_contacts": [
+      { "raw_value": "6 99 11 22 33", "contact_type": "PHONE" },
+      { "raw_value": "+2348031234567", "contact_type": "PHONE" }
+    ]
+  },
+  {
+    "source_id": "jiji_nga_301",
+    "title": "Warehouse Supervisors & Inventory Clerks",
+    "description": "Apex Logistics Group is hiring Warehouse Supervisors across Nigeria. Successful applicants will be responsible for stock auditing and dispatch records. Pre-employment medical fee and identification badge fee of 5,000 NGN required before onboarding. Direct applications to recruitment.desk247@gmail.com or call 09078889900.",
+    "platform": "jiji",
+    "country_code": "NGA",
+    "poster_name": "Apex Logistics Group",
+    "source_url": "https://jiji.ng/abuja/jobs/warehouse-supervisor-301",
+    "posted_at": "2026-09-17T16:00:00Z",
+    "extracted_contacts": [
+      { "raw_value": "09078889900", "contact_type": "PHONE" },
+      { "raw_value": "recruitment.desk247@gmail.com", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "jobberman_nga_302",
+    "title": "Warehouse Supervisors & Store Keepers Wanted",
+    "description": "Prime Horizon Global is hiring Warehouse Supervisors across Nigeria. Successful applicants will be responsible for stock auditing and dispatch records. Pre-employment medical fee and identification badge fee of 5,000 NGN required before onboarding. Direct applications to recruitment.desk247@gmail.com or WhatsApp 09078889900.",
+    "platform": "jobberman",
+    "country_code": "NGA",
+    "poster_name": "Prime Horizon Global",
+    "source_url": "https://jobberman.com/listings/warehouse-supervisor-302",
+    "posted_at": "2026-09-18T10:10:00Z",
+    "extracted_contacts": [
+      { "raw_value": "09078889900", "contact_type": "PHONE" },
+      { "raw_value": "recruitment.desk247@gmail.com", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "jiji_ken_303",
+    "title": "Warehouse Supervisors & Inventory Clerks (Nairobi)",
+    "description": "Starline Logistics Africa is hiring Warehouse Supervisors across Nairobi Kenya. Successful applicants will be responsible for stock auditing and dispatch records. Pre-employment medical fee and identification badge fee of 1,500 KES required before onboarding. Direct applications to recruitment.desk247@gmail.com or WhatsApp 0712334455.",
+    "platform": "jiji",
+    "country_code": "KEN",
+    "poster_name": "Starline Logistics Africa",
+    "source_url": "https://jiji.co.ke/nairobi/jobs/warehouse-supervisor-303",
+    "posted_at": "2026-09-20T12:00:00Z",
+    "extracted_contacts": [
+      { "raw_value": "0712334455", "contact_type": "PHONE" },
+      { "raw_value": "recruitment.desk247@gmail.com", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "jobberman_nga_901",
+    "title": "Senior Python Backend Engineer",
+    "description": "Paystack is looking for a Senior Backend Engineer to join our Core Banking engineering team in Lagos. You will design, scale, and maintain mission-critical payment services handling millions of transactions. Requirements: 5+ years of experience with Python, Go, or Java, strong understanding of distributed systems and PostgreSQL. We offer competitive remuneration, health insurance, and flexible work. No application fees required.",
+    "platform": "jobberman",
+    "country_code": "NGA",
+    "poster_name": "Paystack Payments Limited",
+    "source_url": "https://jobberman.com/listings/senior-backend-engineer-901",
+    "posted_at": "2026-09-21T09:00:00Z",
+    "extracted_contacts": [
+      { "raw_value": "careers@paystack.com", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "jiji_ken_902",
+    "title": "Registered Nurse - Critical Care Unit",
+    "description": "Nairobi Hospital invites applications from qualified candidates for the position of Critical Care Nurse. Candidates must possess a Bachelor of Science in Nursing or Diploma in KRCHN from a recognized institution, with valid registration with the Nursing Council of Kenya and minimum 3 years of clinical ICU experience. Submit applications via hospital portal.",
+    "platform": "jiji",
+    "country_code": "KEN",
+    "poster_name": "The Nairobi Hospital",
+    "source_url": "https://jiji.co.ke/nairobi/jobs/registered-nurse-902",
+    "posted_at": "2026-09-21T14:00:00Z",
+    "extracted_contacts": [
+      { "raw_value": "recruitment@nairobihospital.org", "contact_type": "EMAIL" }
+    ]
+  },
+  {
+    "source_id": "cmr_class_903",
+    "title": "Comptable Général d'Entreprise (Douala)",
+    "description": "PME industrielle basée à Douala Bassa recherche un comptable général d'expérience. Titulaire d'un BAC+3 minimum en comptabilité et gestion, maîtrise du système comptable OHADA et logiciel Sage Saari. Expérience minimum de 3 ans dans un poste similaire. Envoyer CV et lettre de motivation.",
+    "platform": "cameroon_classifieds",
+    "country_code": "CMR",
+    "poster_name": "Societe Industrielle du Cameroun",
+    "source_url": "https://cameroon-classifieds.com/jobs/comptable-903",
+    "posted_at": "2026-09-21T15:30:00Z",
+    "extracted_contacts": [
+      { "raw_value": "rh@industriecmr.cm", "contact_type": "EMAIL" }
+    ]
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "actorSpecification": 1,
+  "name": "pan-african-job-scam-detector",
+  "title": "Pan-African Job Scam & Threat Network Detector",
+  "description": "Cross-border job scam and recruitment fraud detection engine across Africa (CMR, NGA, KEN, GHA).",
+  "version": "1.0",
+  "meta": {
+    "templateId": "python-empty"
+  },
+  "dockerfilePath": "./Dockerfile",
+  "input": "./input_schema.json",
+  "output": "./output_schema.json",
+  "readme": "../README.md",
+  "categories": [
+    "CYBERSECURITY",
+    "JOBS",
+    "AI"
+  ],
+  "pricing": {
+    "pricingModel": "PAY_PER_EVENT",
+    "events": {
+      "LISTING_SCANNED": {
+        "eventTitle": "Job Listing Scanned & Contacts Extracted",
+        "priceUsd": 0.005
+      },
+      "SYNDICATE_UNMASKED": {
+        "eventTitle": "Cross-Border Fraud Syndicate Unmasked",
+        "priceUsd": 0.05
+      }
+    }
+  }
+}

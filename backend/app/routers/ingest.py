@@ -1,16 +1,26 @@
 import uuid
 from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Body
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.listing import Listing
 from app.models.contact import Contact
 from app.models.listing_contact import ListingContact
-from app.schemas.listing import BulkIngestRequest, BulkIngestResponse
+from app.schemas.listing import (
+    BulkIngestRequest,
+    BulkIngestResponse,
+    ApifyIngestRequest,
+    ApifyIngestResponse
+)
 from app.services.cleaner import normalize_phone, normalize_email, extract_contacts_from_text
 from app.services.detector import detect_listing_links
 from app.services.scorer import score_all_listings
-from app.services.graph_service import cluster_and_save_networks
+from app.services.network_analyzer import analyze_and_save_networks, cluster_and_save_networks
+from app.services.apify_service import (
+    convert_apify_item_to_listing,
+    run_apify_actor,
+    ingest_and_analyze
+)
 
 router = APIRouter(prefix="/ingest", tags=["Ingestion & Pipeline"])
 
@@ -126,6 +136,54 @@ def bulk_ingest_listings(payload: BulkIngestRequest, db: Session = Depends(get_d
         inserted_ids=inserted_ids
     )
 
+@router.post("/apify", response_model=ApifyIngestResponse, status_code=status.HTTP_200_OK)
+def ingest_from_apify(
+    payload: ApifyIngestRequest = Body(default_factory=ApifyIngestRequest),
+    db: Session = Depends(get_db)
+):
+    """
+    Runs an Apify Actor (or accepts raw sample items for testing/simulation),
+    extracts phone numbers and emails via regex, converts items to Ghost-Networks format,
+    persists new listings to PostgreSQL, and runs the NetworkX network detection pipeline.
+    """
+    raw_items = []
+
+    # 1. Fetch scraped items from sample_items or remote Apify Actor
+    if payload.sample_items is not None:
+        raw_items = payload.sample_items
+    else:
+        try:
+            raw_items = run_apify_actor(
+                actor_id=payload.actor_id,
+                run_input=payload.run_input,
+                token=payload.token,
+                max_items=payload.max_items or 50
+            )
+        except ValueError as ve:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Apify execution error: {str(e)}"
+            )
+
+    # 2. Convert raw scraped items into Ghost-Networks listings with regex contacts
+    converted_listings = [convert_apify_item_to_listing(item) for item in raw_items]
+
+    # 3. Save new listings and trigger NetworkX network analysis
+    result = ingest_and_analyze(db, converted_listings)
+
+    return ApifyIngestResponse(
+        status="success",
+        actor_id=payload.actor_id,
+        items_scraped=len(raw_items),
+        inserted_count=result["inserted_count"],
+        duplicate_count=result["duplicate_count"],
+        inserted_ids=result["inserted_ids"],
+        syndicates_detected=result["syndicates_detected"],
+        cross_border_syndicates=result["cross_border_syndicates"]
+    )
+
 @router.post("/run-detection")
 def trigger_detection_pipeline(db: Session = Depends(get_db)):
     """
@@ -134,11 +192,13 @@ def trigger_detection_pipeline(db: Session = Depends(get_db)):
     """
     links_count = detect_listing_links(db)
     scored_count = score_all_listings(db)
-    clusters_count = cluster_and_save_networks(db)
+    analysis_stats = analyze_and_save_networks(db)
 
     return {
         "status": "completed",
         "links_created": links_count,
         "listings_scored": scored_count,
-        "syndicates_identified": clusters_count
+        "syndicates_identified": analysis_stats["clusters_created"],
+        "cross_border_syndicates": analysis_stats["cross_border_count"],
+        "listings_updated": analysis_stats["listings_updated"]
     }

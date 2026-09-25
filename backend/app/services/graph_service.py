@@ -16,68 +16,7 @@ RISK_COLOR_MAP = {
     "LOW": "#2A9D8F"        # Teal
 }
 
-def cluster_and_save_networks(db: Session) -> int:
-    """
-    Builds a NetworkX graph of listings and links, finds connected components,
-    and saves them as NetworkCluster records, linking listings to their syndicate.
-    """
-    links = db.query(ListingLink).all()
-    if not links:
-        return 0
-
-    G = nx.Graph()
-    for link in links:
-        G.add_edge(str(link.source_listing_id), str(link.target_listing_id), weight=link.weight, link_type=link.link_type)
-
-    # Find connected components with at least 2 nodes
-    components = [c for c in nx.connected_components(G) if len(c) >= 2]
-
-    # Clear previous networks
-    db.query(NetworkCluster).delete()
-    db.flush()
-
-    # Reset listing network_ids
-    db.query(Listing).update({Listing.network_id: None})
-
-    created_clusters = 0
-    for idx, comp in enumerate(components, start=1):
-        member_ids = [uuid.UUID(node_id) for node_id in comp]
-        member_listings = db.query(Listing).filter(Listing.id.in_(member_ids)).all()
-
-        countries = sorted(list({l.country_code for l in member_listings}))
-        platforms = sorted(list({l.platform for l in member_listings}))
-        max_risk = max([l.risk_score for l in member_listings], default=0)
-
-        # Count unique contacts in this ring
-        contact_ids = set()
-        for l in member_listings:
-            for c in l.contacts:
-                contact_ids.add(c.id)
-
-        # Label syndicate
-        country_str = "-".join(countries)
-        label = f"Syndicate #{idx} ({country_str} Ring)"
-
-        network = NetworkCluster(
-            id=uuid.uuid4(),
-            label=label,
-            risk_score=max_risk,
-            listings_count=len(member_listings),
-            contacts_count=len(contact_ids),
-            countries_involved=countries,
-            platforms_involved=platforms
-        )
-        db.add(network)
-        db.flush()
-
-        # Update member listings
-        for l in member_listings:
-            l.network_id = network.id
-
-        created_clusters += 1
-
-    db.commit()
-    return created_clusters
+from app.services.network_analyzer import cluster_and_save_networks
 
 def build_graph_response(
     db: Session,

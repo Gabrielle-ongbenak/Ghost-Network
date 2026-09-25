@@ -1,0 +1,36 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Pan-African Job Scam Detector Output",
+  "properties": {
+    "listing_id": {
+      "type": "string",
+      "title": "Listing ID",
+      "template": "{{listing_id}}"
+    },
+    "title": {
+      "type": "string",
+      "title": "Job Title",
+      "template": "{{title}}"
+    },
+    "country": {
+      "type": "string",
+      "title": "Country",
+      "template": "{{country}}"
+    },
+    "platform": {
+      "type": "string",
+      "title": "Platform",
+      "template": "{{platform}}"
+    },
+    "risk_score": {
+      "type": "string",
+      "title": "Risk Score",
+      "template": "{{risk_score}}"
+    },
+    "is_fraud_suspect": {
+      "type": "string",
+      "title": "Fraud Suspect",
+      "template": "{{is_fraud_suspect}}"
+    }
+  }
+}

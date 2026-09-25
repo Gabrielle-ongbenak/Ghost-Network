@@ -1,58 +1,75 @@
-# Frontend - Ghost Networks
+# React + TypeScript + Vite
 
-Ce répertoire est réservé pour le développement de l'application frontend (React / Vite ou Next.js).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## 🚀 Connexion avec le Backend
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-Le backend FastAPI tourne localement via Docker sur le port **8000**.
+## React Compiler
 
-- **URL de base de l'API** : `http://localhost:8000`
-- **Documentation interactive Swagger UI** : [http://localhost:8000/docs](http://localhost:8000/docs)
-- **Documentation alternative ReDoc** : [http://localhost:8000/redoc](http://localhost:8000/redoc)
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
----
+## Expanding the ESLint configuration
 
-## 📡 Principaux Endpoints Disponibles
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-| Méthode | Endpoint | Description |
-|---|---|---|
-| `GET` | `/health` | Healthcheck de l'API (`{"status": "ok"}`) |
-| `GET` | `/api/stats/overview` | Statistiques globales (nombre d'annonces, réseaux détectés, contacts suspects, répartition géographique et plateformes) |
-| `GET` | `/api/listings` | Liste paginée et filtrable des annonces (`platform`, `country_code`, `risk_level`, `search`, `limit`, `offset`) |
-| `GET` | `/api/listings/{id}` | Détail d'une annonce avec son score de risque, signaux détectés et contacts associés |
-| `GET` | `/api/networks` | Liste des réseaux / syndicats de fraude détectés |
-| `GET` | `/api/networks/{id}` | Détail d'un réseau de fraude (membres, métriques, contacts partagés) |
-| `GET` | `/api/graph` | Données graphe (`nodes` et `edges`) prêtes pour la visualisation (React Flow, Vis.js, Cytoscape, D3) |
-| `POST` | `/api/ingest/bulk` | Ingestion en masse de nouvelles annonces |
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
----
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## 🔒 Configuration CORS
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-Le backend est configuré pour autoriser les requêtes cross-origin en provenance des environnements de dev locaux standards :
-- `http://localhost:3000` (ex: Create React App, Next.js)
-- `http://localhost:5173` (ex: Vite / React)
-- `http://127.0.0.1:3000`
-- `http://127.0.0.1:5173`
-
-Les méthodes (`GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`) et les headers d'autorisation / credentials sont activés.
-
----
-
-## 💻 Démarrage recommandé (React + Vite)
-
-Pour initialiser le projet frontend dans ce dossier :
-
-```bash
-# Exemple avec Vite + React + TypeScript
-npm create vite@latest . -- --template react-ts
-npm install
-npm run dev
 ```
 
-Pensez à configurer un fichier `.env` ou `.env.local` :
-```env
-VITE_API_URL=http://localhost:8000
+You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
 ```
