@@ -34,6 +34,8 @@ export interface NetworkNode {
   jobTitle: string
   entity: string
   riskLevel: RiskLevel
+  x: number
+  y: number
 }
 
 export interface NetworkEdge {

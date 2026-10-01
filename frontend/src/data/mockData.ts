@@ -1,10 +1,15 @@
-import type { Listing, DashboardStats, CountryBreakdown, NetworkNode, NetworkEdge } from "../types/listing"
+import type { Listing, CountryBreakdown, NetworkEdge } from "../types/listing"
 
-export const dashboardStats: DashboardStats = {
+export const dashboardStats = {
   totalScanned: 8419,
   totalFlagged: 1248,
   networksDetected: 37,
   countriesMonitored: 3,
+  activeRings: 18,
+  flaggedForTakedown: 19,
+  upfrontFeesIntercepted: "$84.2k",
+  platformTakedownRate: "78.4%",
+  listingsDeleted: 976,
 }
 
 export const countryBreakdown: CountryBreakdown[] = [
@@ -29,6 +34,11 @@ export const countryBreakdown: CountryBreakdown[] = [
     percentage: 22,
     insight: "Fake flight attendant job listings target job seekers",
   },
+]
+export const platformBreakdown = [
+  { platform: "Jiji Classifieds", count: 612, percentage: 49, riskLevel: "high" as const },
+  { platform: "Jobberman", count: 386, percentage: 31, riskLevel: "high" as const },
+  { platform: "Facebook Groups", count: 250, percentage: 20, riskLevel: "medium" as const },
 ]
 
 export const mockListings: Listing[] = [
@@ -117,11 +127,11 @@ export const mockListings: Listing[] = [
   },
 ]
 
-export const networkNodes: NetworkNode[] = [
-  { id: "LST-9041", jobTitle: "Senior Rig Operations Engineer", entity: "Atlantic Petro Energy Ltd", riskLevel: "high" },
-  { id: "LST-9038", jobTitle: "Executive Project Assistant", entity: "UNICEF Relief Mission (Spoofed)", riskLevel: "high" },
-  { id: "LST-9022", jobTitle: "Bilingual Flight Attendant", entity: "Gulf Wings Placement Agency", riskLevel: "high" },
-  { id: "LST-9010", jobTitle: "Logistics Coordinator", entity: "West Africa Freight Co.", riskLevel: "medium" },
+export const networkNodes = [
+  { id: "LST-9041", jobTitle: "Rig Engineer Ad", entity: "Atlantic Petro Corp", riskLevel: "high" as const, x: 25, y: 25 },
+  { id: "LST-9038", jobTitle: "UNICEF Aid Ad", entity: "Spoofed NGO", riskLevel: "high" as const, x: 70, y: 20 },
+  { id: "LST-9022", jobTitle: "Flight Attendant Ad", entity: "Gulf Wings Crew Services", riskLevel: "high" as const, x: 75, y: 70 },
+  { id: "LST-9010", jobTitle: "Warehouse Clerk Ad", entity: "Gulf Terminal Support Co.", riskLevel: "medium" as const, x: 25, y: 70 },
 ]
 
 export const networkEdges: NetworkEdge[] = [
@@ -129,3 +139,16 @@ export const networkEdges: NetworkEdge[] = [
   { source: "LST-9041", target: "LST-9022", connectionType: "text", label: "Identical Text Match" },
   { source: "LST-9038", target: "LST-9010", connectionType: "payment", label: "Same Mobile Money Account" },
 ]
+export const networkGroupInfo = {
+  groupId: "Group #49",
+  status: "Active Syndicate",
+  simpleExplanation: "This single group of scammers posted 14 different job ads across Cameroon, Nigeria, and Kenya. Every ad instructs job applicants to contact the exact same WhatsApp number to pay a fake 'application fee'.",
+  totalConnectedAds: 14,
+  countriesTargeted: [
+    { name: "Cameroon", count: 6 },
+    { name: "Nigeria", count: 5 },
+    { name: "Kenya", count: 3 },
+  ],
+  sharedWhatsApp: "+237 6 78 49 11 20",
+  commonScamTrick: "Demanding upfront $45 USD / 15,000 NGN fee for a fake 'medical kit' or 'clearance badge'.",
+}
